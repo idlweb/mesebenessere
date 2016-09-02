@@ -1,0 +1,26 @@
+Options +FollowSymLinks
+RewriteEngine On
+#RewriteRule ^$ http://%{HTTP_HOST}/landing/ [R=301]
+
+RewriteRule ^$ http://%{HTTP_HOST}/home.html [nc,L]
+RewriteRule ^$ home.php [nc,L]
+RewriteRule ^([a-z0-9\_\-]*)\.html$ $1.php [nc,L]
+
+RewriteRule ^(eventi|consulenze)/$ $1/$1-elenco.php [nc,L,QSA]
+RewriteRule ^(eventi|consulenze)/([a-z0-9\-]*)\.html$ $1/$1-dettaglio.php?permalink=$2 [nc,L]
+
+
+# GRUPPO MISTO: Immagini usate da gestionale e front-end
+#RewriteRule ^(articoli|media|prodotti)/immagini/([0-9]*)/([0-9]*)/([0-9a-zA-Z]*)/([0-9a-f]*)/([a-zA-Z0-9\-\_]*)\.(jpg|jpeg|png|gif)$ phpThumb/phpThumb.php?src=../$1Img/$6.$7&w=$2&h=$3&zc=$4&hash=$5&q=100 [L]
+
+#REGOLE DI SICUREZZA
+#RewriteRule ^articoliImg(.*)? - [R=404]
+
+#RewriteCond %{REQUEST_URI} !(.*)hash(.*)$
+#RewriteRule ^phpThumb(!hash)? - [R=404]
+
+
+
+# BRAINGEST: Regole base gestionale
+#RewriteRule ^([a-z][a-z])/braingest/modules/([a-zA-Z]*)/([a-zA-Z\-]*)\.mod(.*)$ braingest/modules/pagina_modulo.php?module=$2&command=$3&lang=$1$4 [L]
+#RewriteRule ^([a-z][a-z])/braingest/([a-zA-Z\-]*)/pages/([a-zA-Z\-]*).mod$ braingest/modules/$2/pages/$3.php?lang=$1
